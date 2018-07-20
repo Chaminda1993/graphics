@@ -3,16 +3,22 @@
 #include <GL/glut.h>
 
 int ww = 600, wh = 400;
-int xi, yi, xf, yf;
+struct Point{
+    int x;
+    int y;
+};
 
-void drawLine(GLint x1, GLint y1, GLint x2, GLint y2)
+Point list[20];
+int pointCounter=0;
+
+void drawLine(Point start, Point end)
 {	
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glPointSize(2.0);
 
 	glBegin(GL_LINES);
-		glVertex2i(x1, y1);
-		glVertex2i(x2, y2);
+		glVertex2i(start.x, start.y);
+		glVertex2i(end.x, end.y);
 	glEnd();
 	glFlush();
 }
@@ -27,17 +33,28 @@ void display()
 
 void mouse(int btn, int state, int x, int y)
 {
-	if(btn==GLUT_LEFT_BUTTON )
+    Point temp;
+    temp.x=x;
+    temp.y=wh-y;
+	if(btn==GLUT_LEFT_BUTTON ){
 		if (state == GLUT_DOWN) 
 		{
-			xi = x;
-			yi = (wh-y);
+			list[pointCounter++]=temp;
 		}
-		else if (state == GLUT_UP) {
-			xf = x;
-			yf = (wh-y);
-			drawLine(xi,yi,xf,yf);
+    }
+	if(btn==GLUT_RIGHT_BUTTON ){
+		if (state == GLUT_DOWN) 
+		{
+			list[pointCounter++]=temp;
+            drawLine(list[0],list[pointCounter-1]);
 		}
+    }
+    if(pointCounter>1){
+        drawLine(list[pointCounter-2],list[pointCounter-1]);
+    }
+    if(btn==GLUT_RIGHT_BUTTON){
+        pointCounter=0;
+    }
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -64,7 +81,7 @@ int main(int argc, char** argv)
 	glutInit(&argc,argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(ww,wh);
-	glutCreateWindow("Lines");
+	glutCreateWindow("Draw Polygon");
 	myinit();
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
