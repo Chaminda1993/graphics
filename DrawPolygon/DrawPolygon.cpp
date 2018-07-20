@@ -50,6 +50,8 @@ void mouse(int btn, int state, int x, int y)
     }
     if(pointCounter>1){
         drawLine(list[pointCounter-2],list[pointCounter-1]);
+		//glPushAttrib(GL_MATRIX_MODE);
+		glPushMatrix();
     }
     if(btn==GLUT_RIGHT_BUTTON){
         pointCounter=0;
@@ -59,6 +61,8 @@ void mouse(int btn, int state, int x, int y)
 void drawTempLine(Point start, Point end)
 {	
 	glClear(GL_COLOR_BUFFER_BIT);
+	//glPopAttrib();
+	glPopMatrix();
 	glPointSize(1.0);
 
 	glBegin(GL_LINES);
@@ -104,7 +108,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard); 
-	glutPassiveMotionFunc(mouseMove);
+	//glutPassiveMotionFunc(mouseMove);
 	glutMainLoop();
      
 	return 0;
