@@ -13,7 +13,6 @@ int pointCounter=0;
 
 void drawLine(Point start, Point end)
 {	
-	//glClear(GL_COLOR_BUFFER_BIT);
 	glPointSize(2.0);
 
 	glBegin(GL_LINES);
@@ -57,6 +56,25 @@ void mouse(int btn, int state, int x, int y)
     }
 }
 
+void drawTempLine(Point start, Point end)
+{	
+	glClear(GL_COLOR_BUFFER_BIT);
+	glPointSize(1.0);
+
+	glBegin(GL_LINES);
+		glVertex2i(start.x, start.y);
+		glVertex2i(end.x, end.y);
+	glEnd();
+	glFlush();
+}
+
+void mouseMove(int x,int y){
+	Point temp;
+	temp.x=x;
+	temp.y=wh-y;
+	drawTempLine(list[pointCounter-1],temp);
+}
+
 void keyboard(unsigned char key, int x, int y)
 {
     if (key == 'q' || key == 'Q')
@@ -86,6 +104,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard); 
+	glutPassiveMotionFunc(mouseMove);
 	glutMainLoop();
      
 	return 0;
