@@ -11,6 +11,14 @@ struct point{
 
 point end,circle;
 
+void display()
+{
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glColor3f(1.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glFlush();
+}
+
 
 void drawCircle(point c)
 {	
@@ -49,14 +57,6 @@ void drawCircle(point c)
 
 
 	glEnd();
-	glFlush();
-}
-
-void display()
-{
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glColor3f(1.0, 1.0, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
 	glFlush();
 }
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
 	glutInit(&argc,argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(ww,wh);
-	glutCreateWindow("Lines");
+	glutCreateWindow("Bresenham's circle");
 	myinit();
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
