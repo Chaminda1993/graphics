@@ -80,7 +80,32 @@ void drawLine(Point str,Point end){
                 glVertex2i(x,y);
             }
         }else{  //m<-1
-            
+            int tmp=str.x;
+            str.x=str.y;
+            str.y=tmp;
+            tmp=end.x;
+            end.x=end.y;
+            end.y=tmp;
+            tmp=dx;
+            dx=dy;
+            dy=tmp;
+
+            dx*=-1;
+
+            int dT=2*(dy-dx),dS=2*dy,d=(2*dy)-dx;
+            int x = str.x, y = str.y;
+            glVertex2i(y,x);
+
+            while(x<end.x){
+                x++;
+                if(d<0){
+                    d-=dS;
+                }else{
+                    y--;
+                    d-=dT;
+                }
+                glVertex2i(y,x);
+            }
         }
         
 
